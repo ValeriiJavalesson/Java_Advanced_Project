@@ -5,6 +5,8 @@ import java.util.Objects;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -15,7 +17,7 @@ import lombok.NonNull;
 @Entity
 @Table
 @Builder
-public class User implements Serializable{
+public class User implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 	@Id
@@ -30,50 +32,75 @@ public class User implements Serializable{
 	private String firstname;
 	@Column
 	private String lastname;
-	@Column
-	private String roles;
+	@Enumerated(EnumType.STRING)
+	private UserRole role;
 	
-	
+
+	public User() {
+	}
+
+	public User(Long id, String email, String password, String firstname, String lastname, UserRole role) {
+		this.id = id;
+		this.email = email;
+		this.password = password;
+		this.firstname = firstname;
+		this.lastname = lastname;
+		this.role = role;
+	}
+
 	public Long getId() {
 		return id;
 	}
+
 	public void setId(Long id) {
 		this.id = id;
 	}
+
 	public String getEmail() {
 		return email;
 	}
+
 	public void setEmail(String email) {
 		this.email = email;
 	}
+
 	public String getPassword() {
 		return password;
 	}
+
 	public void setPassword(String password) {
 		this.password = password;
 	}
+
 	public String getFirstname() {
 		return firstname;
 	}
+
 	public void setFirstname(String firstname) {
 		this.firstname = firstname;
 	}
+
 	public String getLastname() {
 		return lastname;
 	}
+
 	public void setLastname(String lastname) {
 		this.lastname = lastname;
 	}
-	public String getRoles() {
-		return roles;
+
+	public UserRole getRole() {
+		return role;
 	}
-	public void setRoles(String roles) {
-		this.roles = roles;
+
+	public void setRole(UserRole role) {
+		this.role = role;
 	}
+
 	@Override
 	public int hashCode() {
-		return Objects.hash(email, firstname, id, lastname, password, roles);
+		return Objects.hash(email, firstname, id, lastname, password, role);
 	}
+
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
@@ -85,15 +112,13 @@ public class User implements Serializable{
 		User other = (User) obj;
 		return Objects.equals(email, other.email) && Objects.equals(firstname, other.firstname)
 				&& Objects.equals(id, other.id) && Objects.equals(lastname, other.lastname)
-				&& Objects.equals(password, other.password) && Objects.equals(roles, other.roles);
+				&& Objects.equals(password, other.password) && Objects.equals(role, other.role);
 	}
+
 	@Override
 	public String toString() {
 		return "User [id=" + id + ", email=" + email + ", password=" + password + ", firstname=" + firstname
-				+ ", lastname=" + lastname + ", roles=" + roles + "]";
+				+ ", lastname=" + lastname + ", role=" + role + "]";
 	}
-	
-	
-	
-	
+
 }
