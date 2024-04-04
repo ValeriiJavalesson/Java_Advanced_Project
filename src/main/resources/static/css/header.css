@@ -1,5 +1,23 @@
 @charset "UTF-8";
 
-header .navbar{
+header .navbar {
 	background-color: #335aa7 !important;
+}
+
+table tr td, table tr th {
+	background-color: rgba(0, 0, 0, 0) !important;
+	border-bottom: none;
+}
+
+nav li a:hover {
+	color: rgb(243, 227, 112) !important;
+}
+
+select {
+	transition-property: background-color !important;
+	transition-duration: 220ms !important;
+}
+
+select:hover {
+	background-color: beige;
 }

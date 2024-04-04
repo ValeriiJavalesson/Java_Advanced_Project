@@ -1,5 +1,7 @@
 package com.valerko.lgs.domain;
 
+import java.io.Serial;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.LinkedHashMap;
@@ -22,7 +24,9 @@ import lombok.Data;
 @Entity
 @Table
 @Data
-public class FacultyReport {
+public class FacultyReport implements Serializable{
+	@Serial
+	private static final long serialVersionUID = 1L;
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;

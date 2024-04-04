@@ -3,16 +3,16 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>Spring Security</title>
+<title>Home page</title>
 
 </head>
 <body>
 	<div>
 		<jsp:include page="header.jsp"></jsp:include>
 
-		<div class="container d-flex flex-column align-items-center">
+		<div
+			class="container d-flex flex-column align-items-center applicationform">
 			<h1 class="m-3">Welcome to home page!</h1>
-			
 		</div>
 
 	</div>

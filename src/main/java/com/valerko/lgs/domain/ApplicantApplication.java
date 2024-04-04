@@ -1,6 +1,7 @@
 package com.valerko.lgs.domain;
 
 import java.io.Serializable;
+import java.io.Serial;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -11,6 +12,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import lombok.Data;
@@ -18,8 +20,10 @@ import lombok.Data;
 @Entity
 @Table
 @Data
-public class ApplicantApplication implements Serializable{
 
+public class ApplicantApplication implements Serializable {
+	
+	@Serial
 	private static final long serialVersionUID = 1L;
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
@@ -29,12 +33,11 @@ public class ApplicantApplication implements Serializable{
 	private User user;
 	@Column
 	private Double certificatePoints;
-	@Column(name="faculty_id")
+	@ManyToOne
 	private Faculty faculty;
-	@Column
+	@Column(name = "subject_points")
 	@ElementCollection
 	private Map<Subject, Double> subjects;
-
 
 	public void setFaculty(Faculty faculty) {
 		this.faculty = faculty;
@@ -42,6 +45,5 @@ public class ApplicantApplication implements Serializable{
 		faculty.getSubjects().forEach(s -> subjects.put(s, 0.0));
 		setSubjects(subjects);
 	}
-
 
 }

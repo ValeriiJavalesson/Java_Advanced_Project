@@ -23,13 +23,6 @@ public class SecurityConfig {
 	public UserDetailsService userDetailsService() {
 		return new CustomUserDetailService();
 	}
-	
-//	@Bean
-//	public UserDetailsService userDetailsService(PasswordEncoder encoder) {
-//		UserDetails admin = User.builder().username("admin").password(encoder.encode("admin")).build();
-//		UserDetails user = User.builder().username("user").password(encoder.encode("user")).build();		
-//		return new InMemoryUserDetailsManager(admin, user);
-//	}
 
 	@Bean
 	public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {

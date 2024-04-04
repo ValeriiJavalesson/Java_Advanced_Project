@@ -1,6 +1,8 @@
 package com.valerko.lgs.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -20,7 +22,7 @@ public class UserController {
 	private UserServiceImpl userServiceImpl;
 	@Autowired
 	private PasswordEncoder encoder;
-	
+
 	@RequestMapping("/")
 	public ModelAndView welcome() {
 		return new ModelAndView("welcome");
@@ -42,18 +44,21 @@ public class UserController {
 	}
 
 	@PostMapping("/registration")
-	public ModelAndView saveUser(@RequestParam("firstname") String firstName, 
-						   @RequestParam("lastname") String lastName,
-						   @RequestParam("email") String email, 
-						   @RequestParam("password") String password) {		
-		User user = User.builder()
-				.email(email)
-				.firstname(firstName)
-				.lastname(lastName)
-				.password(encoder.encode(password))
-				.role(UserRole.ROLE_USER)
-				.build();
-		userServiceImpl.saveUser(user);		
+	public ModelAndView saveUser(@RequestParam("firstname") String firstName, @RequestParam("lastname") String lastName,
+			@RequestParam("email") String email, @RequestParam("password") String password) {
+		User user = User.builder().email(email).firstname(firstName).lastname(lastName)
+				.password(encoder.encode(password)).role(UserRole.ROLE_USER).build();
+		userServiceImpl.saveUser(user);
 		return new ModelAndView("redirect:/login?registered=successfully");
+	}
+	
+	@GetMapping("/api/getcurrentuser")
+	public String getUser() {
+		Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		if (principal instanceof UserDetails) {
+			String username = ((UserDetails) principal).getUsername();
+			return username;
+		}
+		return "";
 	}
 }
