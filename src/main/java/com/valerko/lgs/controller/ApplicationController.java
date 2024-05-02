@@ -10,11 +10,7 @@ import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import com.valerko.lgs.domain.ApplicantApplication;
 import com.valerko.lgs.domain.Faculty;
@@ -67,9 +63,7 @@ public class ApplicationController {
 		List<ApplicantApplicationDto> allApplications = new ArrayList<ApplicantApplicationDto>();
 		userServiceImpl.findAllUsers().forEach(u -> {
 			Optional<ApplicantApplication> optionalApplication = applicationServiceImpl.findByUser(u);
-			if (optionalApplication.isPresent()) {
-				allApplications.add(ApplicantApplicationDto.mapToApplicantApplicationDto(optionalApplication.get()));
-			}
+			optionalApplication.ifPresent(applicantApplication -> allApplications.add(ApplicantApplicationDto.mapToApplicantApplicationDto(applicantApplication)));
 		});
 		List<ApplicantApplicationDto> list = allApplications.stream()
 				.filter(a -> a.getFaculty().equalsIgnoreCase(faculty)).toList();

@@ -7,10 +7,7 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -98,8 +95,7 @@ public class FacultyReportController {
 		List<ApplicantApplication> applicationList = new ArrayList<ApplicantApplication>();
 		applicationIdList.stream().forEach(id -> {
 			Optional<ApplicantApplication> optionalApplication = applicationServiceImpl.findById(Long.parseLong(id));
-			if (optionalApplication.isPresent())
-				applicationList.add(optionalApplication.get());
+			optionalApplication.ifPresent(application -> applicationList.add(application));
 		});
 		report.setFaculty(faculty);
 		report.setApplications(applicationList);

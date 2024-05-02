@@ -1,5 +1,6 @@
 package com.valerko.lgs.security;
 
+import java.io.Serial;
 import java.util.Collection;
 import java.util.List;
 
@@ -11,7 +12,8 @@ import org.springframework.util.StringUtils;
 import com.valerko.lgs.domain.User;
 
 public class CustomUserDetails extends User implements UserDetails {
-
+	
+	@Serial
 	private static final long serialVersionUID = 1L;
 	private User user;
 
