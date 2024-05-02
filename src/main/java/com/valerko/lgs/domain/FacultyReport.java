@@ -3,12 +3,9 @@ package com.valerko.lgs.domain;
 import java.io.Serial;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Comparator;
-import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Map;
-import java.util.TreeMap;
-import java.util.stream.Collectors;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.ElementCollection;
@@ -24,7 +21,7 @@ import lombok.Data;
 @Entity
 @Table
 @Data
-public class FacultyReport implements Serializable{
+public class FacultyReport implements Serializable {
 	@Serial
 	private static final long serialVersionUID = 1L;
 	@Id
@@ -39,25 +36,18 @@ public class FacultyReport implements Serializable{
 	@Column
 	private Integer numberOfStudents = 1;
 
-	public Map<User, Double> getEnrolledUsers() {
-		Map<User, Double> collect = applications.stream()
-				.collect(Collectors.toMap(ApplicantApplication::getUser,
-						applicatio -> applicatio.getCertificatePoints() + applicatio.getSubjects().values().stream()
-								.collect(Collectors.summingDouble(Double::doubleValue))));
+	public List<ApplicantApplication> getEnrolledApplication() {
 
-		Map<User, Double> sortedCollect = collect.entrySet().stream().sorted(Map.Entry.comparingByValue())
-				.collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue, (a, b) -> a, LinkedHashMap::new));
-
-		while (sortedCollect.size() > numberOfStudents) {
-			User key = sortedCollect.keySet().iterator().next();
-			sortedCollect.remove(key);
+		Collections.sort(applications, new Comparator<ApplicantApplication>() {
+			public int compare(ApplicantApplication o1, ApplicantApplication o2) {
+				return o2.compareTo(o1);
+			}
+		});
+		if (numberOfStudents < applications.size()) {
+			List<ApplicantApplication> toRemove = applications.subList(numberOfStudents, applications.size());
+			applications.removeAll(toRemove);
 		}
-		
-		Map<User, Double> sortedCollectCutted = new TreeMap<User, Double>(
-				Comparator.comparing(sortedCollect::get).reversed());
-		sortedCollectCutted.putAll(sortedCollect);
-
-
-		return sortedCollectCutted;
+		return applications;
 	}
+
 }

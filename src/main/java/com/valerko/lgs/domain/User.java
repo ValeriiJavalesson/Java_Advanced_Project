@@ -11,13 +11,12 @@ import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.Lob;
 import jakarta.persistence.Table;
-import lombok.Builder;
 import lombok.NonNull;
 
 @Entity
 @Table
-@Builder
 public class User implements Serializable {
 
 	@Serial
@@ -36,18 +35,11 @@ public class User implements Serializable {
 	private String lastname;
 	@Enumerated(EnumType.STRING)
 	private UserRole role;
-	
+	@Lob
+	@Column(length = 20971520)
+	private String encodedImage;
 
 	public User() {
-	}
-
-	public User(Long id, String email, String password, String firstname, String lastname, UserRole role) {
-		this.id = id;
-		this.email = email;
-		this.password = password;
-		this.firstname = firstname;
-		this.lastname = lastname;
-		this.role = role;
 	}
 
 	public Long getId() {
@@ -96,6 +88,14 @@ public class User implements Serializable {
 
 	public void setRole(UserRole role) {
 		this.role = role;
+	}
+
+	public String getEncodedImage() {
+		return encodedImage;
+	}
+
+	public void setEncodedImage(String encodedImage) {
+		this.encodedImage = encodedImage;
 	}
 
 	@Override

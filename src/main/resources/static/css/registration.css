@@ -1,27 +1,5 @@
 body {
-	/* background-color: #c8c8fa; */
-}
-
-header .navbar {
-	background-color: #335aa7 !important;
-}
-
-table tr td, table tr th {
-	background-color: rgba(0, 0, 0, 0) !important;
-	border-bottom: none;
-}
-
-nav li a:hover {
-	color: rgb(243, 227, 112) !important;
-}
-
-select {
-	transition-property: background-color !important;
-	transition-duration: 220ms !important;
-}
-
-select:hover {
-	background-color: beige;
+	background-color: #c8c8fa;
 }
 
 #user_photo {
@@ -29,13 +7,13 @@ select:hover {
 	background-color: #ffc600;
 	border: solid;
 	border-radius: 0.5vw;
-	width: 16rem;
-	height: 20rem;
+	width: 19rem;
+	height: 24rem;
 }
 
 #photo {
-	width: 100%;
-	height: 20rem;
+	width: 100%;	
+	height: 24rem;
 	object-fit: cover;
 }
 
@@ -52,10 +30,11 @@ select:hover {
 	cursor: pointer;
 	text-align: center;
 	background: rgba(255, 255, 255, .5);
-	height: 0;
+	height: 0px;
 	overflow: hidden;
 }
 
 #photo:hover ~#edit_photo, #edit_photo:hover {
-	height: 3rem;
+	height: 54px;
 }
+

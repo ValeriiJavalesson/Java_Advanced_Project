@@ -8,6 +8,8 @@ import com.valerko.lgs.domain.Faculty;
 import com.valerko.lgs.domain.User;
 
 public interface ApplicationService {
+	
+	List<ApplicantApplication> findAll();
 
 	Optional<ApplicantApplication> findByUser(User user);
 

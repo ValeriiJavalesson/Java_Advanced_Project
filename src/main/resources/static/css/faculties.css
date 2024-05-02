@@ -1,0 +1,35 @@
+.card {
+	transition-property: scale !important;
+	transition-duration: 600ms !important;
+	color: #00509f !important;
+}
+
+.card-body {
+	margin-top: -25px;
+}
+
+.card:hover {
+	scale: 1.08;
+}
+ .edit_button img{
+    height: 21px;
+ 	transition-property: scale,  opacity;
+	transition-duration: 600ms !important;
+	opacity: 0.5 !important;
+	scale:0;
+ }
+
+.close_button {
+	transition-property: scale,  opacity;
+	transition-duration: 600ms !important;
+	opacity: 0.3 !important;
+	scale:0;
+}
+
+.card:hover .close_button, .card:hover .edit_button img{
+	scale:1;
+}
+
+.close_button:hover, .edit_button img:hover {
+	opacity: 1 !important;
+}

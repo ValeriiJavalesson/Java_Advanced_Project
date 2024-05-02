@@ -11,7 +11,7 @@
 	rel="stylesheet">
 <link href="https://getbootstrap.com/docs/5.3/assets/css/docs.css"
 	rel="stylesheet">
-<link rel="stylesheet" href="css/app.css">
+<link rel="stylesheet" href="css/registration.css">
 <script
 	src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
@@ -26,8 +26,6 @@
 				<label for="inputEmail" class="form-label">Email address</label> <input
 					type="text" class="form-control" id="inputEmail"
 					aria-describedby="emailHelp" name="username">
-				<div id="emailHelp" class="form-text">We'll never share your
-					email with anyone else.</div>
 			</div>
 			<div class="mb-3">
 				<label for="inputPassword" class="form-label">Password</label> <input

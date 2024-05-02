@@ -9,4 +9,5 @@ import com.valerko.lgs.domain.FacultyReport;
 
 public interface FacultyReportRepository extends JpaRepository<FacultyReport, Long>{
 	Optional<FacultyReport> findByFaculty(Faculty faculty);
+	void deleteByFaculty(Faculty faculty);
 }

@@ -31,6 +31,8 @@ public class ApplicationServiceImpl implements ApplicationService {
 
 	@Override
 	public ApplicantApplication create(ApplicantApplication applicantApplication) {
+		
+		
 		return applicationRepository.save(applicantApplication);
 	}
 
@@ -53,6 +55,11 @@ public class ApplicationServiceImpl implements ApplicationService {
 	@Override
 	public void deleteByUser(User user) {
 		applicationRepository.deleteByUser(user);
+	}
+
+	@Override
+	public List<ApplicantApplication> findAll() {
+		return applicationRepository.findAll();
 	}
 
 }

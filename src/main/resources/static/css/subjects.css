@@ -1,0 +1,24 @@
+.card {
+	transition-property: scale !important;
+	transition-duration: 600ms !important;
+	color: #00509f !important;
+}
+
+.card:hover {
+	scale: 1.05;
+}
+
+.close_button {
+	transition-property: scale,  opacity;
+	transition-duration: 600ms !important;
+	opacity: 0.5 !important;
+	scale:0;
+}
+
+.card:hover .close_button {
+	scale:1;
+}
+
+.close_button:hover {
+	opacity: 1 !important;
+}

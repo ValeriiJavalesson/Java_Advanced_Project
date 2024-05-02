@@ -4,10 +4,12 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.valerko.lgs.dao.UserRepository;
 import com.valerko.lgs.domain.User;
+import com.valerko.lgs.domain.UserRole;
 import com.valerko.lgs.service.UserService;
 
 @Service
@@ -15,6 +17,9 @@ public class UserServiceImpl implements UserService {
 
 	@Autowired
 	private UserRepository repository;
+
+	@Autowired
+	private PasswordEncoder encoder;
 
 	@Override
 	public Optional<User> findByEmail(String email) {
@@ -28,6 +33,8 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public User saveUser(User user) {
+		user.setPassword(encoder.encode(user.getPassword()));
+		user.setRole(UserRole.ROLE_USER);
 		return repository.save(user);
 	}
 
