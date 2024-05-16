@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -26,6 +27,7 @@ public class SubjectController {
 	private SubjectServiceImpl subjectServiceImpl;
 
 	@GetMapping("/subjects")
+	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	public ModelAndView subject() {
 		ModelAndView model = new ModelAndView("subjects");
 		List<Subject> subjects = subjectServiceImpl.findAll();
@@ -34,6 +36,7 @@ public class SubjectController {
 	}
 
 	@RequestMapping(value = "/allsubjects", method = RequestMethod.GET)
+	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	public List<Subject> getSubjects() {
 		List<Subject> subject = null;
 		subject = subjectServiceImpl.findAll();
@@ -41,6 +44,7 @@ public class SubjectController {
 	}
 
 	@RequestMapping(value = "/savesubject", method = RequestMethod.POST)
+	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	public String createSubject(@RequestParam("subjectName") String name) {
 		if (name.equals(""))
 			return "error";
@@ -55,7 +59,8 @@ public class SubjectController {
 	}
 
 	@Transactional
-	@RequestMapping(value = "/deletesubject", method = RequestMethod.POST)
+	@RequestMapping(value = "/deletesubject", method = RequestMethod.DELETE)
+	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	public String deleteSubject(@RequestParam String name) {
 		if (name.equals(""))
 			return "error";

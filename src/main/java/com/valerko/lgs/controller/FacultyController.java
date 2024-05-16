@@ -8,6 +8,7 @@ import java.util.Optional;
 import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -16,8 +17,11 @@ import com.valerko.lgs.domain.Faculty;
 import com.valerko.lgs.domain.Subject;
 import com.valerko.lgs.dto.FacultyDto;
 import com.valerko.lgs.service.impl.ApplicationServiceImpl;
+import com.valerko.lgs.service.impl.FacultyReportServiceImpl;
 import com.valerko.lgs.service.impl.FacultyServiceImpl;
 import com.valerko.lgs.service.impl.SubjectServiceImpl;
+
+import jakarta.transaction.Transactional;
 
 @RestController
 @RequestMapping("/api")
@@ -29,6 +33,8 @@ public class FacultyController {
 	private FacultyServiceImpl facultyServiceImpl;
 	@Autowired
 	private SubjectServiceImpl subjectServiceImpl;
+	@Autowired
+	private FacultyReportServiceImpl facultyReportServiceImpl;
 
 	@GetMapping("/faculty")
 	public ModelAndView faculty() {
@@ -45,6 +51,7 @@ public class FacultyController {
 	}
 
 	@RequestMapping(value = "/savefaculty", method = RequestMethod.POST)
+	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	public String saveFaculties(@RequestBody FacultyDto facultyDto) {
 		String name = facultyDto.getName();
 		if (name.equals(""))
@@ -65,7 +72,7 @@ public class FacultyController {
 		});
 
 		faculty.setSubjects(newSubjectsSet);
-		facultyServiceImpl.create(faculty);
+		optionalFaculty.ifPresentOrElse( (f) -> facultyServiceImpl.update(faculty), () -> facultyServiceImpl.create(faculty));
 
 		List<ApplicantApplication> allApplication = applicationServiceImpl.findApplicationsByFaculty(faculty);
 		allApplication.stream().forEach(a -> {
@@ -83,7 +90,9 @@ public class FacultyController {
 		return "success";
 	}
 
-	@RequestMapping(value = "/deletefaculty", method = RequestMethod.POST)
+	@Transactional
+	@RequestMapping(value = "/deletefaculty", method = RequestMethod.DELETE)
+	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	public String deleteFaculties(@RequestParam String name) {
 		if (name.equals(""))
 			return "error";
@@ -91,6 +100,7 @@ public class FacultyController {
 		if (optionalFaculty.isPresent()) {
 			applicationServiceImpl.findApplicationsByFaculty(optionalFaculty.get())
 					.forEach(a -> applicationServiceImpl.delete(a));
+			facultyReportServiceImpl.deleteByFaculty(optionalFaculty.get());
 			facultyServiceImpl.delete(optionalFaculty.get());
 			return "success";
 		} else

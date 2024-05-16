@@ -21,7 +21,7 @@ public class Faculty implements Serializable{
 	@Column
 	private String name;
 
-	@ManyToMany(cascade = CascadeType.ALL)
+	@ManyToMany
 	@JoinTable(name = "faculty_subjects", joinColumns = @JoinColumn(name = "faculty_id"), inverseJoinColumns = @JoinColumn(name = "subject_id"))
 	private Set<Subject> subjects = new HashSet<Subject>();
 

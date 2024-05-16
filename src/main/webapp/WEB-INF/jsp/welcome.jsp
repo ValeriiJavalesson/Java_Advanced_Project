@@ -16,6 +16,7 @@
 <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
 </head>
 <body>
+
 	<div class="container d-flex flex-column align-items-center">
 		<h1 class="m-3">Welcome page</h1>
 		<a href="login" type="button" class="btn btn-primary m-2">LOGIN</a>

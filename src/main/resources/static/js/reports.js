@@ -1,3 +1,6 @@
+const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]')
+const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl))
+
 function addReport(element) {
 	$("table tbody").html('');
 	if (!isEmpty(element)) {
@@ -85,6 +88,29 @@ function viewButtons() {
 		$(".saveButton").addClass('disabled');
 }
 
+function selectAllApplications(elem) {
+	let listOfElement = $(".form-check-input");
+	let arrayOfElement = [];
+	for (var i = $(".form-check-input").length >>> 0; i--;) {
+		arrayOfElement[i] = listOfElement[i];
+	}
+	if (arrayOfElement.some((x) => x.checked === false)) {
+		arrayOfElement.forEach(function(element) {
+			$(element).prop("checked", true);
+		});
+		$(elem).attr("data-bs-original-title", "Deselect all");
+		$(".tooltip-inner").text("Deselect all");
+	} else {
+		arrayOfElement.forEach(function(element) {
+			$(element).prop("checked", false);
+
+		});
+		$(".tooltip-inner").text("Select all");
+		$(elem).attr("data-bs-original-title", "Select all");
+	}
+	viewButtons();
+}
+
 function saveReport() {
 	var faculty = $(".facultieslist").val();
 	var allInputs = Array.from($('table input'));
@@ -133,8 +159,8 @@ function removeReport(element) {
 }
 
 function showResult(element) {
-	var facultyId = $(element).attr('id');
-	var facultyName = $(element).text();
+	var facultyId = $(element).children(":first").attr('id');
+	var facultyName = $(element).children(":first").text();
 	var resultList = '';
 	$.get('report?id=' + facultyId, function(data) {
 		if (!isEmpty(data)) {
@@ -142,8 +168,8 @@ function showResult(element) {
 		}
 	}).done(function() {
 		if (!isEmpty(resultList)) {
-			var content = "<div class='fw-bold h3'>Faculty: "+ facultyName+"</div>"+
-			"<div class='fw-bold h4 mb-2'>Winners:</div>";
+			var content = "<div class='fw-bold h3'>Faculty: " + facultyName + "</div>" +
+				"<div class='fw-bold h4 mb-2'>Winners:</div>";
 			$(".page-content").html(content);
 			$(".table-content").removeClass('d-none');
 			content = "<table class='table bg-light table-group-divider table-bordered'><thead><tr>" +

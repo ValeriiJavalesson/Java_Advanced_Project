@@ -12,27 +12,34 @@
 .card:hover {
 	scale: 1.08;
 }
- .edit_button img{
-    height: 21px;
- 	transition-property: scale,  opacity;
+
+.edit_button img {
+	height: 21px;
+	transition-property: scale, opacity;
 	transition-duration: 600ms !important;
 	opacity: 0.5 !important;
-	scale:0;
-	z-index: 3;
- }
-
-.close_button {
-	transition-property: scale,  opacity;
-	transition-duration: 600ms !important;
-	opacity: 0.3 !important;
-	scale:0;
+	scale: 0;
 	z-index: 3;
 }
 
-.card:hover .close_button, .card:hover .edit_button img{
-	scale:1;
+.close_button {
+	transition-property: scale, opacity;
+	transition-duration: 600ms !important;
+	opacity: 0.3 !important;
+	scale: 0;
+	z-index: 3;
+}
+
+.card:hover .close_button, .card:hover .edit_button img {
+	scale: 1;
 }
 
 .close_button:hover, .edit_button img:hover {
 	opacity: 1 !important;
+}
+
+.select-tooltip {
+	--bs-tooltip-bg: var(--bs-warning) !important;
+	--bs-tooltip-color: var(--bs-black) !important;
+	font-weight: bold !important;
 }

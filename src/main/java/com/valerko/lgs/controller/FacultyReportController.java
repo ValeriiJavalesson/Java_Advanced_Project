@@ -7,6 +7,7 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -32,7 +33,7 @@ public class FacultyReportController {
 	@Autowired
 	private FacultyServiceImpl facultyServiceImpl;
 	@Autowired
-	FacultyReportServiceImpl facultyReportServiceImpl;
+	private FacultyReportServiceImpl facultyReportServiceImpl;
 
 	@RequestMapping("/reports")
 	public ModelAndView welcome() {
@@ -60,6 +61,7 @@ public class FacultyReportController {
 	}
 
 	@RequestMapping(value = "/getreport", method = RequestMethod.GET)
+	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	public FacultyReportDto getFacultyReport(@RequestParam String facultyName) {
 		if (facultyName.equals(""))
 			return null;
@@ -76,6 +78,7 @@ public class FacultyReportController {
 	}
 
 	@RequestMapping(value = "/savereport", method = RequestMethod.POST)
+	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	public String saveFacultyReport(@RequestParam("faculty") String facultyName,
 			@RequestParam("applicationIdList") List<String> applicationIdList, @RequestParam Integer numberOfStudents) {
 		FacultyReport report;
@@ -100,12 +103,16 @@ public class FacultyReportController {
 		report.setFaculty(faculty);
 		report.setApplications(applicationList);
 		report.setNumberOfStudents(numberOfStudents);
-		facultyReportServiceImpl.create(report);
+		
+		OptionalFacultyReport.ifPresentOrElse( (r) -> facultyReportServiceImpl.update(report), () -> facultyReportServiceImpl.create(report));
+		
+//		facultyReportServiceImpl.create(report);
 		return "success";
 	}
 
 	@Transactional
 	@RequestMapping(value = "/deletereport", method = RequestMethod.DELETE)
+	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	public String deleteReport(@RequestParam Long id) {
 		if (!id.getClass().equals(Long.class))
 			return "error";

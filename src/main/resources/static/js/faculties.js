@@ -96,7 +96,7 @@ function createFaculty() {
 		subjects[element.id] = element.name;
 	});
 	var subjectsAndName = {
-		facultyName: facultyName,
+		name: facultyName,
 		subjects: subjects
 	};
 	$.ajax({
@@ -118,14 +118,20 @@ function deleteFaculty() {
 	var facultyid = $("input#facultyNametoDelete").attr("facultyid");
 	if (facultyName === '') return;
 	var faculty = { name: facultyName };
-	$.post("deletefaculty", faculty, function(data) {
-		if (data === 'success') {
-			$("input#facultyNametoDelete").val("");
+	$.ajax({
+		url: 'deletefaculty',
+		type: 'DELETE',
+		data: faculty,
+		complete: function(result) {
+			if (result.responseText === 'success') {
+				$("input#facultyNametoDelete").val("");
 			$('.card[id = ' + facultyid + ']').remove();
-		} else if (data === 'notfound') {
-			alert("Faculty not found");
-		} else alert("Check input!");
+			} else if (result.responseText === 'notfound') {
+				alert("Faculty not found");
+			} else alert("Check input!");
+		}
 	});
+	
 }
 
 function removeFaculty(element) {

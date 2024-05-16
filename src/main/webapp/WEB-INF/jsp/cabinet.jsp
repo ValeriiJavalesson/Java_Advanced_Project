@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib prefix="security" uri="http://www.springframework.org/security/tags"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -28,25 +29,25 @@
 		<div class="userInfo mb-3">${user.firstname}	${user.lastname}</div>
 		<div class="applicationform align-items-center d-flex flex-column"></div>
 	</div>
-	
-	<div class="modal fade" id="exampleModal" tabindex="-1"
-		aria-labelledby="exampleModalLabel" aria-hidden="true">
-		<div class="modal-dialog">
-			<div class="modal-content">
-				<div class="modal-header justify-content-center">
-					<h1 class="modal-title fs-5" id="exampleModalLabel">Are you
-						sure to delete your application?</h1>
-					
-				</div>
-				<input type='text' id='facultyNametoDelete' hidden="true">
-				<div class="justify-content-center modal-footer">
-					<button type="button" class="btn btn-primary" data-bs-dismiss="modal" onclick="deleteApplication()">Yes</button>
-					<button type="button" class="btn btn-warning" data-bs-dismiss="modal" aria-label="Close">No</button>
+	<security:authorize access="hasRole('ROLE_ADMIN')">		
+		<div class="modal fade" id="exampleModal" tabindex="-1"
+			aria-labelledby="exampleModalLabel" aria-hidden="true">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header justify-content-center">
+						<h1 class="modal-title fs-5" id="exampleModalLabel">Are you
+							sure to delete your application?</h1>
+						
+					</div>
+					<input type='text' id='facultyNametoDelete' hidden="true">
+					<div class="justify-content-center modal-footer">
+						<button type="button" class="btn btn-primary" data-bs-dismiss="modal" onclick="deleteApplication()">Yes</button>
+						<button type="button" class="btn btn-warning" data-bs-dismiss="modal" aria-label="Close">No</button>
+					</div>
 				</div>
 			</div>
 		</div>
-	</div>
-
+	</security:authorize>
 	<script src="../js/cabinet.js"></script>
 </body>
 </html>

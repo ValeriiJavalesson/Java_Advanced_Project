@@ -11,37 +11,41 @@ var faculties = '';
 
 function getUserApplication() {
 	var appl = null;
-	$.get("getapplication", function(data) {
-		appl = data;
-	}).done(function() {
-		var content = '';
-		if (isEmpty(appl.faculty)) {
-			content +=
-				"<div class='mb-3'>You don't have application.</div><button type='button' class='btn btn-primary m-1' id='createNewApplicationButton' onclick = 'editApplication()'>Create new applicant application</button>";
-		} else {
-			var totalPoints = appl.certificatePoints;
-			content += "<table class='table text-center'><thead><tr><th scope='col'>Faculty</th><th scope='col' class='visually-hidden'>User name</th><th scope='col'>Certificate points</th>";
-			$.each(appl.subjects, function(k, v) {
-				content +=
-					"<th scope='col' >" + k + "</th>";
-			});
-			content +=
-				"<th scope='col'>Total points</th><th scope='col'></th></tr></thead><tbody><tr class='table-group-divider'><th scope='row'>" +
-				appl.faculty + "</th><td class='visually-hidden'>" + appl.username + "</td><td>" + appl.certificatePoints + "</td>";
-			$.each(appl.subjects, function(k, v) {
-				totalPoints += v;
-				content +=
-					"<td>" + v + "</td>";
-			});
-			content +=
-				"<td>" + totalPoints + "</td></tr></tbody></table>";
+	$.ajax({
+		type: "GET",
+		url: 'getapplication',
+		complete: function(data) {
+			if (data.status === 200) {
+				appl = JSON.parse(data.responseText);
+				var content = '';
+				if (isEmpty(appl.faculty)) {
+					content +=
+						"<div class='mb-3'>You don't have application.</div><button type='button' class='btn btn-primary m-1' id='createNewApplicationButton' onclick = 'editApplication()'>Create new applicant application</button>";
+				} else {
+					var totalPoints = appl.certificatePoints;
+					content += "<table class='table text-center'><thead><tr><th scope='col'>Faculty</th><th scope='col' class='visually-hidden'>User name</th><th scope='col'>Certificate points</th>";
+					$.each(appl.subjects, function(k, v) {
+						content +=
+							"<th scope='col' >" + k + "</th>";
+					});
+					content +=
+						"<th scope='col'>Total points</th><th scope='col'></th></tr></thead><tbody><tr class='table-group-divider'><th scope='row'>" +
+						appl.faculty + "</th><td class='visually-hidden'>" + appl.username + "</td><td>" + appl.certificatePoints + "</td>";
+					$.each(appl.subjects, function(k, v) {
+						totalPoints += v;
+						content +=
+							"<td>" + v + "</td>";
+					});
+					content +=
+						"<td>" + totalPoints + "</td></tr></tbody></table>";
 
-			content += "<div><button type='button' class='btn btn-outline-secondary me-2' id='editApplicationButton' onclick = 'editApplication()'>Edit</button>" +
-				"<button type='button' class='btn btn-danger ms-2' id='editApplicationButton' data-bs-toggle='modal' data-bs-target='#exampleModal'>Delete</button></div>"
+					content += "<div><button type='button' class='btn btn-outline-secondary me-2' id='editApplicationButton' onclick = 'editApplication()'>Edit</button>" +
+						"<button type='button' class='btn btn-danger ms-2' id='editApplicationButton' data-bs-toggle='modal' data-bs-target='#exampleModal'>Delete</button></div>"
+				}
+				$(".applicationform").html(content);
+			}
 		}
-
-		$(".applicationform").html(content);
-	});
+	})
 };
 
 function editApplication() {

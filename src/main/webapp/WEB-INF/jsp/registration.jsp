@@ -66,7 +66,7 @@
 
 		</form:form>
 		<a href="login" type="button" class="btn btn-light  m-5">Already
-			registered? Go to login...</a>
+			registered? Go to login</a>
 	</div>
 </body>
 </html>
