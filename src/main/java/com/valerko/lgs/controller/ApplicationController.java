@@ -112,6 +112,10 @@ public class ApplicationController {
 				applicationSubjects.put(optionalSubjects.get(), s.getValue());
 		});
 		applicantApplication.setCertificatePoints(applicantApplicationDto.getCertificatePoints());
+		List<FacultyReport> allReports = facultyReportServiceImpl.findAll();
+		allReports.stream().forEach(report -> {
+			report.getApplications().removeIf(appl -> appl.getUser().equals(user));
+		});
 		applicationServiceImpl.update(applicantApplication);
 		return "success";
 	}

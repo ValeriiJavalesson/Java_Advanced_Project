@@ -24,12 +24,12 @@ function addFaculty(element) {
 	var content = '';
 	content +=
 		"<form class='newFacultyForm col-6 col-lg-4'>  <div class='mb-3'>" +
-		"<label for='facultyName' class='form-label'>Faculty Name</label>" +
+		"<label for='facultyName' class='form-label'>" + $('#faculties_create_name').val() + "</label>" +
 		"<input name='facultyName' type='text' class='form-control' id='facultyName'></div >" +
 		"<div class='mb-5 addedSubjectsList d-flex flex-wrap mb-2'> </div>" +
 		"<div class='mb-5 subjectsList d-flex flex-row'></div>" +
-		"<button type='button' class='btn btn-primary m-1' id='saveFacultyButton' onclick='createFaculty()'>Save Faculty</button>" +
-		"<button type='button' class='btn btn-danger m-1' onClick='window.location.reload();'>Cancel</button>" +
+		"<button type='button' class='btn btn-primary m-1' id='saveFacultyButton' onclick='createFaculty()'>" + $('#faculties_create_save').val() + "</button>" +
+		"<button type='button' class='btn btn-danger m-1' onClick='window.location.reload();'>" + $('#faculties_create_cancel').val() + "</button>" +
 		"</form >";
 	$(".page-content").html(content);
 	if (!isEmpty(element)) {
@@ -108,7 +108,7 @@ function createFaculty() {
 		complete: function(data) {
 			if (data.responseText === 'success') {
 				location.reload();
-			} else alert("Check inputs!");
+			} else alert($('#faculties_edit_check').val());
 		}
 	});
 }
@@ -125,13 +125,13 @@ function deleteFaculty() {
 		complete: function(result) {
 			if (result.responseText === 'success') {
 				$("input#facultyNametoDelete").val("");
-			$('.card[id = ' + facultyid + ']').remove();
+				$('.card[id = ' + facultyid + ']').remove();
 			} else if (result.responseText === 'notfound') {
-				alert("Faculty not found");
-			} else alert("Check input!");
+				alert($('#faculties_delete_notfound').val());
+			} else alert($('#faculties_edit_check').val());
 		}
 	});
-	
+
 }
 
 function removeFaculty(element) {

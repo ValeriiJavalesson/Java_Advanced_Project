@@ -98,15 +98,15 @@ function selectAllApplications(elem) {
 		arrayOfElement.forEach(function(element) {
 			$(element).prop("checked", true);
 		});
-		$(elem).attr("data-bs-original-title", "Deselect all");
-		$(".tooltip-inner").text("Deselect all");
+		$(elem).attr("data-bs-original-title", $('#reports_table_deselect').val());
+		$(".tooltip-inner").text($('#reports_table_deselect').val());
 	} else {
 		arrayOfElement.forEach(function(element) {
 			$(element).prop("checked", false);
 
 		});
-		$(".tooltip-inner").text("Select all");
-		$(elem).attr("data-bs-original-title", "Select all");
+		$(".tooltip-inner").text($('#reports_table_select').val());
+		$(elem).attr("data-bs-original-title", $('#reports_table_select').val());
 	}
 	viewButtons();
 }
@@ -168,14 +168,14 @@ function showResult(element) {
 		}
 	}).done(function() {
 		if (!isEmpty(resultList)) {
-			var content = "<div class='fw-bold h3'>Faculty: " + facultyName + "</div>" +
-				"<div class='fw-bold h4 mb-2'>Winners:</div>";
+			var content = "<div class='fw-bold h3'>" + $('#reports_table_name').val() + " " + facultyName + "</div>" +
+				"<div class='fw-bold h4 mb-2'>" + $('#reports_table_winners').val() + "</div>";
 			$(".page-content").html(content);
 			$(".table-content").removeClass('d-none');
 			content = "<table class='table bg-light table-group-divider table-bordered'><thead><tr>" +
-				"<th scope='col' class='text-center col-4'>Firstname</th>" +
-				"<th scope='col' class='text-center col-4'>Lastname</th>" +
-				"<th scope='col' class='text-center col-2'>Total points</th>" +
+				"<th scope='col' class='text-center col-4'>" + $('#reports_table_firstname').val() + "</th>" +
+				"<th scope='col' class='text-center col-4'>" + $('#reports_table_lastname').val() + "</th>" +
+				"<th scope='col' class='text-center col-2'>" + $('#reports_table_points').val() + "</th>" +
 				"</tr></thead><tbody></tbody></table>";
 			$(".table-content").html(content);
 			resultList.forEach((element) => {
@@ -191,7 +191,7 @@ function showResult(element) {
 				$("table tbody").append(content);
 
 			});
-			$(".table-content").append("<a type='button' class='btn btn-warning ms-2' href='reports'>Back</a>");
+			$(".table-content").append("<a type='button' class='btn btn-warning ms-2' href='reports'>" + $('#reports_table_back').val() + "</a>");
 		}
 	});
 }

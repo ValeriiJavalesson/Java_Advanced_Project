@@ -2,15 +2,23 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib prefix="security" uri="http://www.springframework.org/security/tags"%>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Faculties</title>
+<title><spring:message code='faculties.title'/></title>
 <link rel="stylesheet" href="../css/faculties.css">
 </head>
 <body>
 	<jsp:include page="header.jsp"></jsp:include>
+	<div>
+		<input id="faculties_create_name" type="hidden" value="<spring:message code='faculties.create.name'/>"/>
+		<input id="faculties_create_save" type="hidden" value="<spring:message code='faculties.create.save'/>"/>
+		<input id="faculties_create_cancel" type="hidden" value="<spring:message code='faculties.create.cancel'/>"/>
+		<input id="faculties_edit_check" type="hidden" value="<spring:message code='faculties.edit.check'/>"/>
+		<input id="faculties_delete_notfound" type="hidden" value="<spring:message code='faculties.delete.notfound'/>"/>
+	</div>
 	<div
 		class="container d-flex flex-column align-items-center page-content">
 		<div class="align-items-center container-fluid d-flex justify-content-center flex-wrap">
@@ -33,7 +41,7 @@
 								<p class="align-items-center card-title d-flex h-100 h3 justify-content-center text-center" >${faculty.name}</p>
 							</div>
 							<div class="text-black" style="height: 7rem;">
-							<p class="h6">Subjects:</p>
+							<p class="h6"><spring:message code='faculties.subjects'/></p>
 								<ul>
 									<c:forEach var="subject" items="${faculty.subjects}">
 										<li><p class="card-text" id="${subject.id}">${subject.name}</p></li>
@@ -42,7 +50,7 @@
 							</div>	
 							<security:authorize access="hasRole('ROLE_ADMIN')">		
 								<div class="align-items-end d-flex flex-row justify-content-between text-black" style="height: 2rem;">
-									<div class="h6">Number of applications:</div>							
+									<div class="h6"><spring:message code='faculties.number_applications'/></div>							
 									<span class="card-text h2 text-danger" id="numberOfApplication" name="${faculty.name}">0</span>
 								</div>	
 							</security:authorize>
@@ -54,8 +62,8 @@
 							style="width: 20rem; height: 20rem; cursor: pointer;" onclick="addFaculty()">
 							<div class="card-body align-content-center">
 								<div class="align-items-center d-flex flex-column">
-									<p class="card-title h5">Create new</p>
-									<p class="card-title h5 mb-0">faculty</p>
+									<p class="card-title h5"><spring:message code='faculties.create.create'/></p>
+									<p class="card-title h5 mb-0"><spring:message code='faculties.create.faculty'/></p>
 									<p class="card-title text-black h1">+</p>
 								</div>
 							</div>
@@ -69,14 +77,13 @@
 		<div class="modal-dialog">
 			<div class="modal-content">
 				<div class="modal-header justify-content-center">
-					<h1 class="modal-title fs-5" id="exampleModalLabel">Are you
-						sure to delete the faculty?</h1>
+					<h1 class="modal-title fs-5" id="exampleModalLabel"><spring:message code='faculties.delete.confirm'/></h1>
 					
 				</div>
 				<input type='text' id='facultyNametoDelete' hidden="true">
 				<div class="justify-content-center modal-footer">
-					<button type="button" class="btn btn-primary" data-bs-dismiss="modal" onclick="deleteFaculty()">Yes</button>
-					<button type="button" class="btn btn-warning" data-bs-dismiss="modal" aria-label="Close">No</button>
+					<button type="button" class="btn btn-primary" data-bs-dismiss="modal" onclick="deleteFaculty()"><spring:message code='faculties.delete.confirm.yes'/></button>
+					<button type="button" class="btn btn-warning" data-bs-dismiss="modal" aria-label="Close"><spring:message code='faculties.delete.confirm.no'/></button>
 				</div>
 			</div>
 		</div>

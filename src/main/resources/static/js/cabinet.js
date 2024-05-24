@@ -20,16 +20,16 @@ function getUserApplication() {
 				var content = '';
 				if (isEmpty(appl.faculty)) {
 					content +=
-						"<div class='mb-3'>You don't have application.</div><button type='button' class='btn btn-primary m-1' id='createNewApplicationButton' onclick = 'editApplication()'>Create new applicant application</button>";
+						"<div class='mb-3'>"+ $('#cabinet_noapplication').val() +"</div><button type='button' class='btn btn-primary m-1' id='createNewApplicationButton' onclick = 'editApplication()'>"+ $('#cabinet_create').val() +"</button>";
 				} else {
 					var totalPoints = appl.certificatePoints;
-					content += "<table class='table text-center'><thead><tr><th scope='col'>Faculty</th><th scope='col' class='visually-hidden'>User name</th><th scope='col'>Certificate points</th>";
+					content += "<table class='table text-center'><thead><tr><th scope='col'>"+ $('#cabinet_faculty').val() +"</th><th scope='col' class='visually-hidden'>User name</th><th scope='col'>"+ $('#cabinet_certificate').val() +"</th>";
 					$.each(appl.subjects, function(k, v) {
 						content +=
 							"<th scope='col' >" + k + "</th>";
 					});
 					content +=
-						"<th scope='col'>Total points</th><th scope='col'></th></tr></thead><tbody><tr class='table-group-divider'><th scope='row'>" +
+						"<th scope='col'>"+ $('#cabinet_points').val() +"</th><th scope='col'></th></tr></thead><tbody><tr class='table-group-divider'><th scope='row'>" +
 						appl.faculty + "</th><td class='visually-hidden'>" + appl.username + "</td><td>" + appl.certificatePoints + "</td>";
 					$.each(appl.subjects, function(k, v) {
 						totalPoints += v;
@@ -39,8 +39,8 @@ function getUserApplication() {
 					content +=
 						"<td>" + totalPoints + "</td></tr></tbody></table>";
 
-					content += "<div><button type='button' class='btn btn-outline-secondary me-2' id='editApplicationButton' onclick = 'editApplication()'>Edit</button>" +
-						"<button type='button' class='btn btn-danger ms-2' id='editApplicationButton' data-bs-toggle='modal' data-bs-target='#exampleModal'>Delete</button></div>"
+					content += "<div><button type='button' class='btn btn-outline-secondary me-2' id='editApplicationButton' onclick = 'editApplication()'>"+ $('#cabinet_edit').val() +"</button>" +
+						"<button type='button' class='btn btn-danger ms-2' id='editApplicationButton' data-bs-toggle='modal' data-bs-target='#exampleModal'>"+ $('#cabinet_delete').val() +"</button></div>"
 				}
 				$(".applicationform").html(content);
 			}
@@ -67,14 +67,14 @@ function editApplication() {
 		content +=
 			"<form>" +
 			"<div class='mb-3'>" +
-			"<label for='facultiesList' class='form-label'>Faculty</label>" +
+			"<label for='facultiesList' class='form-label'>"+$('#cabinet_faculty').val()+"</label>" +
 			"<select class='form-select' id='facultiesList' onchange='getFacultySubjects()'></select>" +
 			"</div >" +
-			"<label for='certificatePoints' class='form-label'>Certificate Points</label>" +
+			"<label for='certificatePoints' class='form-label'>"+$('#cabinet_certificate').val()+"</label>" +
 			"<input type='number' class='form-control' id='certificatePoints' value=" + certificatePoints + ">" +
 			"<div class='mb-3' id='applicationSubjectsList'></div>" +
-			"<button type='button' class='btn btn-primary m-1' id='saveApplicationButton' onclick = 'createApplication()'>Save Application</button>" +
-			"<button type='button' class='btn btn-danger m-1' id='saveApplicationButton' onclick = 'getUserApplication()'>Cancel</button>" +
+			"<button type='button' class='btn btn-primary m-1' id='saveApplicationButton' onclick = 'createApplication()'>"+$('#cabinet_save').val()+"</button>" +
+			"<button type='button' class='btn btn-danger m-1' id='saveApplicationButton' onclick = 'getUserApplication()'>"+$('#cabinet_cancel').val()+"</button>" +
 			"</form >";
 		$(".applicationform").html(content);
 		getFacultites(faculty, subjects);

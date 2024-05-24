@@ -2,11 +2,11 @@ function addNewSubject() {
 	var content = '';
 	content +=
 		"<form class='w-50'>  <div class='mb-3'>" +
-		"<label for='facultyName' class='form-label'>Subject Name</label>" +
+		"<label for='facultyName' class='form-label'>" + $('#subjects_name').val() + "</label>" +
 		"<input name='subjectName' type='text' class='form-control' id='facultyName'></div >" +
 		"<div class='mb-3 d-flex justify-content-between mb-3'>" +
-		"<button type='button' class='btn btn-primary' id='saveSubjectButton' onClick='saveNewSubject()'>Save Subject</button>" +
-		"<button type='button' class='btn btn-danger' onClick='window.location.reload();'>Cancel</button>" +
+		"<button type='button' class='btn btn-primary' id='saveSubjectButton' onClick='saveNewSubject()'>" + $('#subjects_save').val() + "</button>" +
+		"<button type='button' class='btn btn-danger' onClick='window.location.reload();'>" + $('#subjects_cancel').val() + "</button>" +
 		"</div></form >";
 	$(".page-content").html(content);
 }
@@ -19,9 +19,9 @@ function saveNewSubject() {
 			location.reload();
 			$('input[name=subjectName]').val('');
 		} else if (data === 'update') {
-			alert('Subject already exists!');
+			alert($('#subjects_exists').val());
 		} else
-			alert('Error!');
+			alert($('#subjects_error').val());
 	});
 }
 
@@ -40,8 +40,8 @@ function deleteSubject() {
 				$("input#subjectNametoDelete").val("");
 				$('.card[id = ' + subjectid + ']').remove();
 			} else if (result.responseText === 'notfound') {
-				alert("Subject not found");
-			} else alert("Check input!");
+				alert($('#subjects_notfound').val());
+			} else alert($('#subjects_check').val());
 		}
 	});
 }

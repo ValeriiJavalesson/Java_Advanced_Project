@@ -2,15 +2,26 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib prefix="security" uri="http://www.springframework.org/security/tags"%>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Reports</title>
+<title><spring:message code="reports.title"/></title>
 <link rel="stylesheet" href="../css/reports.css">
 </head>
 <body>
 	<jsp:include page="header.jsp"></jsp:include>
+	<div>
+		<input id="reports_table_select" type="hidden" value="<spring:message code="reports.table.select"/>"/>
+		<input id="reports_table_deselect" type="hidden" value="<spring:message code="reports.table.deselect"/>"/>
+		<input id="reports_table_firstname" type="hidden" value="<spring:message code="reports.table.firstname"/>"/>
+		<input id="reports_table_lastname" type="hidden" value="<spring:message code="reports.table.lastname"/>"/>
+		<input id="reports_table_points" type="hidden" value="<spring:message code="reports.table.points"/>"/>
+		<input id="reports_table_back" type="hidden" value="<spring:message code="reports.table.back"/>"/>
+		<input id="reports_table_winners" type="hidden" value="<spring:message code="reports.table.winners"/>"/>
+		<input id="reports_table_name" type="hidden" value="<spring:message code="reports.table.name"/>"/>
+	</div>
 	<div
 		class="container d-flex flex-column align-items-center page-content">
 		<div class="align-items-center container-fluid d-flex justify-content-center flex-wrap">
@@ -30,7 +41,7 @@
 						</security:authorize>
 						<div class="card-body w-100" id = "${report.id}" onclick='showResult(this)'>
 							<p class="align-items-center d-flex h-50 h3 justify-content-center text-center facultyName" role="button" id="${report.id}">${report.faculty.name}</p>
-							<p class="text-black h4">Number of applications: <span class="text-danger h3">${report.applications.size()}</span></p>
+							<p class="text-black h4"><spring:message code="reports.faculty.number"/> <span class="text-danger h3">${report.applications.size()}</span></p>
 						</div>
 					</div>
 				</c:forEach>
@@ -39,8 +50,8 @@
 							style="width: 20rem; height: 20rem; cursor: pointer;" onclick='addReport()' allfaculties='${allfaculties}' id="addNewReport">
 							<div class="card-body align-content-center">
 								<div class="align-items-center d-flex flex-column">
-									<p class="card-title h5">Create new</p>
-									<p class="card-title h5 mb-0">report</p>
+									<p class="card-title h5"><spring:message code="reports.create.create"/></p>
+									<p class="card-title h5 mb-0"><spring:message code="reports.create.report"/></p>
 									<p class="card-title text-black h1">+</p>
 								</div>
 							</div>
@@ -53,10 +64,10 @@
 			<thead>
 				<tr>
 					<th scope='col' class="text-center col-2" onClick="selectAllApplications(this)" style="cursor: pointer;" 
-						data-bs-toggle="tooltip" data-placement="top" data-bs-custom-class="select-tooltip" data-bs-original-title="Select all">Add to report</th>
-					<th scope='col' class="text-center col-4">Firstname</th>
-					<th scope='col' class="text-center col-4">Lastname</th>
-					<th scope='col' class="text-center col-2">Total points</th>
+						data-bs-toggle="tooltip" data-placement="top" data-bs-custom-class="select-tooltip" data-bs-original-title="<spring:message code="reports.table.select"/>"><spring:message code="reports.table.add"/></th>
+					<th scope='col' class="text-center col-4"><spring:message code="reports.table.firstname"/></th>
+					<th scope='col' class="text-center col-4"><spring:message code="reports.table.lastname"/></th>
+					<th scope='col' class="text-center col-2"><spring:message code="reports.table.points"/></th>
 				</tr>
 			</thead>
 			<tbody>
@@ -65,12 +76,12 @@
 	</div>
 	<div class="d-none buttons-group d-flex justify-content-center">
 		<div class="input-group me-4 w-25">
-			 <span	class="input-group-text">Number of applicants:</span> 
-			 <input type="number" class="form-control" id='numberOfStudents' aria-label="Number of applicants:" onChange="viewButtons()" onkeyup='viewButtons()'>
+			 <span	class="input-group-text"><spring:message code="reports.table.applicants"/></span> 
+			 <input type="number" class="form-control" id='numberOfStudents' aria-label="<spring:message code="reports.table.applicants"/>" onChange="viewButtons()" onkeyup='viewButtons()'>
 		</div>
 		<button type="button" class="btn btn-primary me-2 disabled saveButton"
-			onclick="saveReport()">Save</button>
-		<a type="button" class="btn btn-warning ms-2" href="reports">Back</a>
+			onclick="saveReport()"><spring:message code="reports.table.save"/></button>
+		<a type="button" class="btn btn-warning ms-2" href="reports"><spring:message code="reports.table.cancel"/></a>
 	</div>
 
 	<div class="modal fade" id="exampleModal" tabindex="-1"
@@ -78,14 +89,13 @@
 		<div class="modal-dialog">
 			<div class="modal-content">
 				<div class="modal-header justify-content-center">
-					<h1 class="modal-title fs-5" id="exampleModalLabel">Are you
-						sure to delete the report?</h1>
+					<h1 class="modal-title fs-5" id="exampleModalLabel"><spring:message code="reports.delete.confirm"/></h1>
 					
 				</div>
 				<input type='text' id='reportNametoDelete' hidden="true">
 				<div class="justify-content-center modal-footer">
-					<button type="button" class="btn btn-primary" data-bs-dismiss="modal" onclick="deleteReport()">Yes</button>
-					<button type="button" class="btn btn-warning" data-bs-dismiss="modal" aria-label="Close">No</button>
+					<button type="button" class="btn btn-primary" data-bs-dismiss="modal" onclick="deleteReport()"><spring:message code="reports.delete.confirm.yes"/></button>
+					<button type="button" class="btn btn-warning" data-bs-dismiss="modal" aria-label="Close"><spring:message code="reports.delete.confirm.no"/></button>
 				</div>
 			</div>
 		</div>

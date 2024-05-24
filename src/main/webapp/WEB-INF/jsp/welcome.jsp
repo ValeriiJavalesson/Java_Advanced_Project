@@ -1,10 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>Welcome page</title>
+<title><spring:message code='welcome.title'/></title>
 <link
 	href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
 	rel="stylesheet">
@@ -15,12 +16,12 @@
 	src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
 </head>
-<body>
-
+<body>	
 	<div class="container d-flex flex-column align-items-center">
-		<h1 class="m-3">Welcome page</h1>
-		<a href="login" type="button" class="btn btn-primary m-2">LOGIN</a>
-		<a href="registration" type="button" class="btn btn-primary m-2">REGISTRATION</a>
+	<jsp:include page="locales.jsp"></jsp:include>
+		<h1 class="m-3"><spring:message code='welcome.title'/></h1>
+		<a href="login" type="button" class="btn btn-primary m-2"><spring:message code='welcome.login'/></a>
+		<a href="registration" type="button" class="btn btn-primary m-2"><spring:message code='welcome.registration'/></a>
 	</div>
 	
 </body>
