@@ -6,12 +6,23 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-import jakarta.persistence.*;
-import lombok.Data;
+import jakarta.persistence.Column;
+import jakarta.persistence.ElementCollection;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToOne;
+import jakarta.persistence.Table;
+import lombok.Getter;
+import lombok.Setter;
 
 @Entity
 @Table
-@Data
+@Getter
+@Setter
 
 public class ApplicantApplication implements Serializable, Comparable<ApplicantApplication> {
 
@@ -38,12 +49,23 @@ public class ApplicantApplication implements Serializable, Comparable<ApplicantA
 		setSubjects(subjects);
 	}
 
+	public double getSumOfPoints() {
+		double sumOfSubjects = this.getSubjects().entrySet().stream().mapToDouble(e -> e.getValue()).sum();
+		return sumOfSubjects + this.getCertificatePoints();
+	}
+
 	@Override
 	public int compareTo(ApplicantApplication o) {
 		return (int) (this.getCertificatePoints()
 				+ this.getSubjects().values().stream().collect(Collectors.summingDouble(Double::doubleValue)))
 				- (int) (o.getCertificatePoints()
 						+ o.getSubjects().values().stream().collect(Collectors.summingDouble(Double::doubleValue)));
+	}
+
+	@Override
+	public String toString() {
+		return "ApplicantApplication [user=" + user + ", certificatePoints=" + certificatePoints + ", faculty="
+				+ faculty + ", subjects=" + subjects + "]";
 	}
 
 }

@@ -8,7 +8,10 @@ import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -103,10 +106,9 @@ public class FacultyReportController {
 		report.setFaculty(faculty);
 		report.setApplications(applicationList);
 		report.setNumberOfStudents(numberOfStudents);
-		
-		OptionalFacultyReport.ifPresentOrElse( (r) -> facultyReportServiceImpl.update(report), () -> facultyReportServiceImpl.create(report));
-		
-//		facultyReportServiceImpl.create(report);
+
+		OptionalFacultyReport.ifPresentOrElse((r) -> facultyReportServiceImpl.update(report),
+				() -> facultyReportServiceImpl.create(report));
 		return "success";
 	}
 
@@ -129,7 +131,8 @@ public class FacultyReportController {
 		Optional<FacultyReport> OptionalFacultyReport = facultyReportServiceImpl.findById(id);
 		if (OptionalFacultyReport.isPresent()) {
 			FacultyReport facultyReport = OptionalFacultyReport.get();
-			List<ApplicantApplicationDto> enrolledApplicationDto = FacultyReportDto.getEnrolledApplication(facultyReport);
+			List<ApplicantApplicationDto> enrolledApplicationDto = FacultyReportDto
+					.getEnrolledApplication(facultyReport);
 			return enrolledApplicationDto;
 		}
 		return null;

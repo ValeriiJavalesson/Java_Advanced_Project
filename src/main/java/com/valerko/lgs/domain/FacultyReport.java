@@ -7,12 +7,23 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
-import jakarta.persistence.*;
-import lombok.Data;
+import jakarta.persistence.Column;
+import jakarta.persistence.ElementCollection;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.OneToOne;
+import jakarta.persistence.Table;
+import lombok.Getter;
+import lombok.Setter;
 
 @Entity
 @Table
-@Data
+@Getter
+@Setter
+
 public class FacultyReport implements Serializable {
 	@Serial
 	private static final long serialVersionUID = 1L;

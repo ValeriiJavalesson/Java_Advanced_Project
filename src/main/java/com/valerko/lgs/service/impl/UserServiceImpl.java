@@ -61,11 +61,19 @@ public class UserServiceImpl implements UserService {
 		logger.info("Deleted user by id : " + id);
 		repository.deleteById(id);
 	}
+	
+	@Override
+	public void deleteUserByEmail(String email) {
+		logger.info("Deleted user by email : " + email);
+		repository.deleteByEmail(email);
+	}
 
 	@Override
 	public List<User> findAllUsers() {
 		logger.info("Get all users");
 		return repository.findAll();
 	}
+
+	
 
 }

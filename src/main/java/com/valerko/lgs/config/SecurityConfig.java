@@ -20,7 +20,6 @@ import com.valerko.lgs.security.CustomUserDetailService;
 @EnableMethodSecurity
 public class SecurityConfig {
 
-	
 	@Bean
 	public UserDetailsService userDetailsService() {
 		return new CustomUserDetailService();
@@ -28,21 +27,14 @@ public class SecurityConfig {
 
 	@Bean
 	public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-		http.csrf(AbstractHttpConfigurer::disable)				
-				.authorizeHttpRequests(auth -> auth							
-						.requestMatchers("/api/**")
-						.authenticated()
-						.requestMatchers("/**")
-						.permitAll()
-						)
-				.formLogin(formlogin ->formlogin
-						.loginPage("/login")						
-						.defaultSuccessUrl("/api/home",true)
-						.failureUrl("/login?error=true")
-						.permitAll());
+		http.csrf(AbstractHttpConfigurer::disable)
+				.authorizeHttpRequests(
+						auth -> auth.requestMatchers("/api/**").authenticated().requestMatchers("/**").permitAll())
+				.formLogin(formlogin -> formlogin.loginPage("/login").defaultSuccessUrl("/api/home", true)
+						.failureUrl("/login?error=true").permitAll());
 		return http.build();
 	}
-	
+
 	@Bean
 	public AuthenticationProvider authenticationProvider() {
 		DaoAuthenticationProvider provider = new DaoAuthenticationProvider();

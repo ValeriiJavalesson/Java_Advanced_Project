@@ -5,14 +5,25 @@ import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 
-import jakarta.persistence.*;
-import lombok.Data;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinTable;
+import jakarta.persistence.ManyToMany;
+import jakarta.persistence.Table;
+import lombok.Getter;
+import lombok.Setter;
 
 @Entity
 @Table
-@Data
-public class Faculty implements Serializable{
-	
+@Getter
+@Setter
+
+public class Faculty implements Serializable {
+
 	@Serial
 	private static final long serialVersionUID = 1L;
 	@Id
@@ -25,5 +36,15 @@ public class Faculty implements Serializable{
 	@JoinTable(name = "faculty_subjects", joinColumns = @JoinColumn(name = "faculty_id"), inverseJoinColumns = @JoinColumn(name = "subject_id"))
 	private Set<Subject> subjects = new HashSet<Subject>();
 
+	public Faculty() {
+	}
 
+	public Faculty(String name) {
+		this.name = name;
+	}
+
+	@Override
+	public String toString() {
+		return "Faculty [name=" + name + "]";
+	}
 }
